@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toList;
  * Created by jbeeby on 9/13/16.
  */
 public class DataPuller {
-    
+
     public static List<Long> decode(InputStream is){
         try {
             final GtfsRealtime.FeedMessage feedMessage = GtfsRealtime.FeedMessage.parseFrom(is);

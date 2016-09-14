@@ -11,32 +11,39 @@
 <div class="container">
     <div>
         <h3>How should I get there?</h3>
-    <form action="/" method="GET">
-        <div class="formInfo">
-            <div class="form-group">
-                <label for="from">From </label> <input class="form-control" type="text" id="from" name="from" th:value="${from}"/>
+        <form action="/" method="GET">
+            <div class="formInfo">
+                <div class="form-group">
+                    <label for="from">From </label> <input class="form-control" type="text" id="from" name="from"
+                                                           th:value="${from}"/>
+                </div>
+                <div class="form-group">
+                    <label for="to">To </label> <input class="form-control" type="text" id="to" name="to"
+                                                       th:value="${to}"/>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="to">To </label> <input class="form-control" type="text" id="to" name="to" th:value="${to}"/>
-            </div>
-        </div>
-        <p>
-            <button class="btn btn-default" type="submit">Go</button>
-        </p>
-    </form>
+            <p>
+                <button class="btn btn-default" type="submit">Go</button>
+            </p>
+        </form>
     </div>
 
     <div>
-
+        <h4>Bus route <span th:text="${routeInfo.routeNumber}"></span> from stop <span th:text="${routeInfo.stopId}"></span> </h4>
+        <ul>
+            <li th:each="nextArrival : ${routeInfo.getNextArrivals()}" th:text="${nextArrival}">next arrival</li>
+        </ul>
     </div>
-    <h2>Uber COSTS - <a href="http://uberestimate.com" class=bl>home</a></h2>
-    <div class=ratelist>
-        <strong>uberX:</strong>3 mins >>> $6-7
+
+    <h2>Uber COSTS</h2>
+    <div class="ratelist">
+        <div><strong>uberX:</strong>3 mins &gt;&gt;&gt; $6-7</div>
         <!--<strong>uberPOOL:</strong> $4.52 &nbsp; -->
         <!--<strong>uberXL:</strong> $11-14 &nbsp; -->
         <!--<strong>UberSELECT:</strong> $11-14 &nbsp; -->
         <!--<strong>UberBLACK:</strong> $16-20 &nbsp; -->
         <!--<strong>UberSUV:</strong> $25-29</div><div align=center>-->
+    </div>
     </div>
 </body>
 </html>

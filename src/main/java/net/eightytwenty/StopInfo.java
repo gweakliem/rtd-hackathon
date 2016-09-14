@@ -12,4 +12,16 @@ public class StopInfo {
         this.nextArrivals = nextArrivals;
         this.stopId = stopId;
     }
+
+    public List<Long> getNextArrivals() {
+        return nextArrivals;
+    }
+
+    public String getStopId() {
+        return stopId;
+    }
+
+    public String getRouteNumber() {
+        return routeNumber;
+    }
 }
