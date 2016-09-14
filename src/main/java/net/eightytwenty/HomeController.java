@@ -18,7 +18,7 @@ public class HomeController {
         model.addAttribute("from", from);
         model.addAttribute("to",to);
 
-        List<Long> decode = DataPuller.decode(DataPuller.download());
+        List<Long> decode = DataPuller.getNextTimes("10", "14965");
 //
 //        List<Long> decode= asList(1234L, 3456L, 3466L);
 

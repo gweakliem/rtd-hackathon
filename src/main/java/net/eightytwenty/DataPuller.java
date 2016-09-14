@@ -29,10 +29,21 @@ public class DataPuller {
 
 
 //    public static void main(String[] args) throws Exception {
-//        decode(download());
+//        List<Long> stops = getNextTimes("10", "14965");
+//        stops.toString();
 //    }
-    
-    public static List<Long> decode(InputStream is){
+
+    public static List<Long> getNextTimes(String route, String stop)
+    {
+        try {
+            return download(route, stop);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static List<Long> decode(InputStream is, String route, String stop){
         try {
             final GtfsRealtime.FeedMessage feedMessage = GtfsRealtime.FeedMessage.parseFrom(is);
 
@@ -40,18 +51,18 @@ public class DataPuller {
 
             List<List<GtfsRealtime.TripUpdate.StopTimeUpdate>> routesAtStop = entityList
                     .stream()
-                    .filter(feedEntity -> feedEntity.getTripUpdate().getTrip().getRouteId().equals("10")
-                                && feedEntity.getTripUpdate().getStopTimeUpdateList().stream().anyMatch(p -> p.getStopId().equals("14965")))
+                    .filter(feedEntity -> feedEntity.getTripUpdate().getTrip().getRouteId().equals(route)
+                                && feedEntity.getTripUpdate().getStopTimeUpdateList().stream().anyMatch(p -> p.getStopId().equals(stop)))
                     .map(f -> f.getTripUpdate().getStopTimeUpdateList())
                     .collect(toList());
 
             List<GtfsRealtime.TripUpdate.StopTimeEvent> departures = routesAtStop.stream()
-                    .map(st -> st.stream().filter(ste -> ste.getStopId().equals("14965")).map(ste -> ste.getDeparture()).collect(toList()))
+                    .map(st -> st.stream().filter(ste -> ste.getStopId().equals(stop)).map(ste -> ste.getDeparture()).collect(toList()))
                     .flatMap(f -> f.stream())
                     .collect(toList());
 
             long now = System.currentTimeMillis();
-            List<Long> fromNow = departures.stream().map(f ->  f.getTime() * 1000 - now).collect(toList());
+            List<Long> fromNow = departures.stream().map(f ->  f.getTime() * 1000 - now).sorted().collect(toList());
             System.out.println("departures = " + departures);
             return fromNow;
 
@@ -61,7 +72,7 @@ public class DataPuller {
         return null;
     }
 
-    public static InputStream download() throws Exception {
+    private static List<Long> download(String route, String stop) throws Exception {
         HttpHost target = new HttpHost("www.rtd-denver.com", 80, "http");
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(
@@ -85,15 +96,12 @@ public class DataPuller {
             HttpGet httpget = new HttpGet("http://www.rtd-denver.com/google_sync/TripUpdate.pb");
 
             System.out.println("Executing request " + httpget.getRequestLine() + " to target " + target);
-//            for (int i = 0; i < 3; i++) {
-                CloseableHttpResponse response = httpclient.execute(target, httpget, localContext);
 
-                final InputStream inputStream = response.getEntity().getContent();
-                decode(inputStream);
-                return inputStream;
+            CloseableHttpResponse response = httpclient.execute(target, httpget, localContext);
 
+            final InputStream inputStream = response.getEntity().getContent();
+            return decode(inputStream, route, stop);
 
-//            }
         } finally {
             httpclient.close();
         }
