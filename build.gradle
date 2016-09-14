@@ -23,6 +23,9 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter")
 	compile("org.springframework:spring-web")
 	compile("com.fasterxml.jackson.core:jackson-databind")
+	compile("com.google.protobuf.protobuf-java:3.0.0-beta-2")
+	compile("com.google.transit.gtfs-realtime-bindings:0.0.4")
+
 	testCompile "junit:junit:4.12"
 }
 
