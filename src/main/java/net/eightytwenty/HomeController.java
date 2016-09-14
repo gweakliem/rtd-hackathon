@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     @RequestMapping("/")
-    String home(Model model) {
-        model.addAttribute("name", "foo");
+    String home(@RequestParam(value = "from", required=false) String from,
+                @RequestParam(value = "to", required=false) String to,
+                Model model) {
+        model.addAttribute("from", from);
+        model.addAttribute("to",to);
 
         return "index";
     }
+
 
 }
