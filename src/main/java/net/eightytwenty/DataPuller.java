@@ -1,3 +1,4 @@
+/*
 package net.eightytwenty;
 
 import com.google.transit.realtime.GtfsRealtime;
@@ -21,9 +22,12 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+*/
 /**
  * Created by jbeeby on 9/13/16.
  */
+/*
+
 public class DataPuller {
 
     public static List<Long> decode(InputStream is){
@@ -94,3 +98,4 @@ public class DataPuller {
 
     }
 }
+*/
