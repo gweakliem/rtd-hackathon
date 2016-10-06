@@ -1,4 +1,4 @@
-package net.eightytwenty;
+package net.eightytwenty.rtd.rtdapi;
 
 import com.google.transit.realtime.GtfsRealtime;
 import org.apache.http.HttpHost;

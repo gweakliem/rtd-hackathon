@@ -1,4 +1,4 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import org.junit.Test;
 

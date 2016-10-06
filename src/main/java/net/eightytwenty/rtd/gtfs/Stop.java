@@ -1,10 +1,11 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.TimeZone;
 
-import static net.eightytwenty.gtfs.GtfsHelper.tryGet;
+import static net.eightytwenty.rtd.gtfs.GtfsHelper.tryGet;
 
 /**
  * Created by gordon on 9/29/16.
@@ -26,7 +27,7 @@ public class Stop {
     private String stopId;
     private String zoneId;
 
-    private Stop(double stopLat, boolean wheelchairBoarding, String stopCode, double stopLon, TimeZone stopTimezone, String stopUrl, String parentStation, String stopDesc, String stopName, boolean isStation, String stopId, String zoneId) {
+    Stop(double stopLat, boolean wheelchairBoarding, String stopCode, double stopLon, TimeZone stopTimezone, String stopUrl, String parentStation, String stopDesc, String stopName, boolean isStation, String stopId, String zoneId) {
         this.stopLat = stopLat;
         this.wheelchairBoarding = wheelchairBoarding;
         this.stopCode = stopCode;
@@ -121,5 +122,47 @@ public class Stop {
 
     public String getZoneId() {
         return zoneId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stop stop = (Stop) o;
+        return Double.compare(stop.stopLat, stopLat) == 0 &&
+                wheelchairBoarding == stop.wheelchairBoarding &&
+                Double.compare(stop.stopLon, stopLon) == 0 &&
+                isStation == stop.isStation &&
+                Objects.equals(stopCode, stop.stopCode) &&
+                Objects.equals(stopTimezone, stop.stopTimezone) &&
+                Objects.equals(stopUrl, stop.stopUrl) &&
+                Objects.equals(parentStation, stop.parentStation) &&
+                Objects.equals(stopDesc, stop.stopDesc) &&
+                Objects.equals(stopName, stop.stopName) &&
+                Objects.equals(stopId, stop.stopId) &&
+                Objects.equals(zoneId, stop.zoneId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stopLat, wheelchairBoarding, stopCode, stopLon, stopTimezone, stopUrl, parentStation, stopDesc, stopName, isStation, stopId, zoneId);
+    }
+
+    @Override
+    public String toString() {
+        return "Stop{" +
+                "stopLat=" + stopLat +
+                ", wheelchairBoarding=" + wheelchairBoarding +
+                ", stopCode='" + stopCode + '\'' +
+                ", stopLon=" + stopLon +
+                ", stopTimezone=" + stopTimezone +
+                ", stopUrl='" + stopUrl + '\'' +
+                ", parentStation='" + parentStation + '\'' +
+                ", stopDesc='" + stopDesc + '\'' +
+                ", stopName='" + stopName + '\'' +
+                ", isStation=" + isStation +
+                ", stopId='" + stopId + '\'' +
+                ", zoneId='" + zoneId + '\'' +
+                '}';
     }
 }

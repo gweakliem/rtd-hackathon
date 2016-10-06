@@ -1,11 +1,10 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.time.Duration;
-import java.time.LocalTime;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;

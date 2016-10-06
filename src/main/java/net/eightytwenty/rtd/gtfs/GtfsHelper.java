@@ -1,4 +1,4 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class GtfsHelper {
     protected static <T> T[] parseHelper(InputStream input,
                                          Class<T> targetClass,
                                          Predicate<String> isValidHeader,
-                                         Function<String[],T> parseObject) throws IOException {
+                                         Function<String[], T> parseObject) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String header = reader.readLine();
 
@@ -33,18 +33,26 @@ public class GtfsHelper {
                     final String[] fields = parsedLine.split(",");
                     return parseObject.apply(fields);
                 }).collect(toList());
-        T[] resultArray = (T[])Array.newInstance(targetClass,result.size());
+        T[] resultArray = (T[]) Array.newInstance(targetClass, result.size());
         return result.toArray(resultArray);
     }
 
 
+    /**
+     * Try to get the field at index i, using a null default value if i >= fields.length.
+     *
+     * @param fields
+     * @param i
+     * @return
+     */
     static String tryGet(String[] fields, int i) {
         return tryGet(fields, i, null);
     }
 
     /**
-     * Get the value of fields[i], returning defaultValue if i > fields.length
+     * Get the value of fields[i], returning defaultValue if i >= fields.length
      * or if fields[i] is null
+     *
      * @param fields
      * @param i
      * @param defaultValue

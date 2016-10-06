@@ -1,11 +1,10 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 
-import static java.time.chrono.IsoEra.CE;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 

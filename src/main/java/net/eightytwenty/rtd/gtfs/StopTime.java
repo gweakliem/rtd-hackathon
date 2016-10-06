@@ -1,4 +1,4 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static net.eightytwenty.gtfs.GtfsHelper.tryGet;
+import static net.eightytwenty.rtd.gtfs.GtfsHelper.tryGet;
 
 /**
  * Created by gordon on 9/29/16.

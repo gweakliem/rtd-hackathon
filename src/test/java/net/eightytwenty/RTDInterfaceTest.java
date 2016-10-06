@@ -1,13 +1,12 @@
 package net.eightytwenty;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import net.eightytwenty.rtd.rtdapi.RTDInterface;
 import org.junit.Test;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.InterceptingClientHttpRequestFactory;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.protobuf.ExtensionRegistryInitializer;
-import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;

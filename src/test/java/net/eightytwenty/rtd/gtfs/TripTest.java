@@ -1,8 +1,6 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by gordon on 9/30/16.

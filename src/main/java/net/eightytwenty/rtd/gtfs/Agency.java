@@ -1,11 +1,8 @@
-package net.eightytwenty.gtfs;
+package net.eightytwenty.rtd.gtfs;
 
 import java.io.*;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Created by gordon on 9/29/16.

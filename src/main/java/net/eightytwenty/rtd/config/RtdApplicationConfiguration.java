@@ -1,4 +1,4 @@
-package net.eightytwenty;
+package net.eightytwenty.rtd.config;
 
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
@@ -17,7 +17,7 @@ import java.util.Arrays;
  * Created by gordon on 9/14/16.
  */
 @Configuration
-public class GetThereConfiguration {
+public class RtdApplicationConfiguration {
     @Bean
     RestTemplate restTemplate(ProtobufHttpMessageConverter hmc) {
         return new RestTemplate(Arrays.asList(hmc));
