@@ -13,8 +13,21 @@ kinds of questions we like to ask about data:
 * What's the nearest transit stop to a given location?
 * If I want to go to a given destination from a given location, what routes are available? To answer this, we need to
 know the nearest stop to the start and destination, then figure out what routes serve both stops.
+** discover nearest stop(s) to start
+** discover nearest stop(s) to destination
+** discover routes to start stop(s)
+** discover routes to destination stop(s)
+** possible routes is the intersection of above 2 steps
+** The issue with this is that the nearest stop may not have a route to the destination, or that a stop may be served
+by a large number of routes.
+** Algorithms like Dijkstra & A* https://en.wikipedia.org/wiki/A*_search_algorithm progressively build routes by navigating
+stop to stop. Problem is figuring how far to look for stops. Maybe the nearest stop algo should filter by distance?
 * What routes are running today?
 * Given a particular route, when is the next bus on that route?
+
+Ways to navigate model
+trip -> stop time -> stop
+stop -> stop time -> trip -> route
 
 ## To Run
 

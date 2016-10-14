@@ -2,16 +2,10 @@ package net.eightytwenty.rtd.gtfs;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static net.eightytwenty.rtd.gtfs.GtfsHelper.tryGet;
 
-/**
- * Created by gordon on 9/29/16.
- */
 public class Route {
     public static final String HEADER = "route_long_name,route_type,route_text_color,agency_id,route_id,route_color,route_desc,route_url,route_short_name";
 
@@ -126,4 +120,40 @@ public class Route {
     }
 
     private String routeShortName;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Objects.equals(routeLongName, route.routeLongName) &&
+                routeType == route.routeType &&
+                Objects.equals(routeTextColor, route.routeTextColor) &&
+                Objects.equals(agencyId, route.agencyId) &&
+                Objects.equals(routeId, route.routeId) &&
+                Objects.equals(routeColor, route.routeColor) &&
+                Objects.equals(routeDesc, route.routeDesc) &&
+                Objects.equals(routeUrl, route.routeUrl) &&
+                Objects.equals(routeShortName, route.routeShortName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(routeLongName, routeType, routeTextColor, agencyId, routeId, routeColor, routeDesc, routeUrl, routeShortName);
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "routeLongName='" + routeLongName + '\'' +
+                ", routeType=" + routeType +
+                ", routeTextColor='" + routeTextColor + '\'' +
+                ", agencyId='" + agencyId + '\'' +
+                ", routeId='" + routeId + '\'' +
+                ", routeColor='" + routeColor + '\'' +
+                ", routeDesc='" + routeDesc + '\'' +
+                ", routeUrl='" + routeUrl + '\'' +
+                ", routeShortName='" + routeShortName + '\'' +
+                '}';
+    }
 }

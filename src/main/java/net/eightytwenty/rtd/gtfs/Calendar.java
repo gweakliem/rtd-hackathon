@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  * Created by gordon on 9/29/16.
@@ -100,5 +101,43 @@ public class Calendar {
 
     public boolean isRunsSunday() {
         return runsSunday;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Calendar calendar = (Calendar) o;
+        return runsMonday == calendar.runsMonday &&
+                runsTuesday == calendar.runsTuesday &&
+                runsWednesday == calendar.runsWednesday &&
+                runsThursday == calendar.runsThursday &&
+                runsFriday == calendar.runsFriday &&
+                runsSaturday == calendar.runsSaturday &&
+                runsSunday == calendar.runsSunday &&
+                Objects.equals(serviceId, calendar.serviceId) &&
+                Objects.equals(startDate, calendar.startDate) &&
+                Objects.equals(endDate, calendar.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serviceId, startDate, endDate, runsMonday, runsTuesday, runsWednesday, runsThursday, runsFriday, runsSaturday, runsSunday);
+    }
+
+    @Override
+    public String toString() {
+        return "Calendar{" +
+                "serviceId='" + serviceId + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", runsMonday=" + runsMonday +
+                ", runsTuesday=" + runsTuesday +
+                ", runsWednesday=" + runsWednesday +
+                ", runsThursday=" + runsThursday +
+                ", runsFriday=" + runsFriday +
+                ", runsSaturday=" + runsSaturday +
+                ", runsSunday=" + runsSunday +
+                '}';
     }
 }

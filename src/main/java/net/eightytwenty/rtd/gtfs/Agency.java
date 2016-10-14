@@ -2,11 +2,9 @@ package net.eightytwenty.rtd.gtfs;
 
 import java.io.*;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
-/**
- * Created by gordon on 9/29/16.
- */
 public class Agency {
     public static final String HEADER = "agency_url,agency_name,agency_timezone,agency_id,agency_lang";
 
@@ -54,5 +52,33 @@ public class Agency {
 
     public Locale getLanguage() {
         return language;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Agency agency = (Agency) o;
+        return Objects.equals(url, agency.url) &&
+                Objects.equals(name, agency.name) &&
+                Objects.equals(timezone, agency.timezone) &&
+                Objects.equals(id, agency.id) &&
+                Objects.equals(language, agency.language);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(url, name, timezone, id, language);
+    }
+
+    @Override
+    public String toString() {
+        return "Agency{" +
+                "url='" + url + '\'' +
+                ", name='" + name + '\'' +
+                ", timezone=" + timezone +
+                ", id='" + id + '\'' +
+                ", language=" + language +
+                '}';
     }
 }

@@ -8,7 +8,8 @@ import java.util.TimeZone;
 import static net.eightytwenty.rtd.gtfs.GtfsHelper.tryGet;
 
 /**
- * Created by gordon on 9/29/16.
+ * Class model for GTFS stops file
+ * https://developers.google.com/transit/gtfs/reference/stops-file
  */
 public class Stop {
     public static final String HEADER =
@@ -69,7 +70,7 @@ public class Stop {
                             fields[6],
                             fields[7],
                             fields[8],
-                            tryGet(fields, 9, "1").equals("1"),
+                            tryGet(fields, 9, "0").equals("1"),
                             tryGet(fields, 10),
                             tryGet(fields, 11)
                     );
@@ -100,6 +101,10 @@ public class Stop {
         return stopUrl;
     }
 
+    /**
+     * valid only if isStation is true, otherwise this should be empty
+     * @return
+     */
     public String getParentStation() {
         return parentStation;
     }

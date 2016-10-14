@@ -2,10 +2,7 @@ package net.eightytwenty.rtd.gtfs;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * GTFS Calendar_dates type
@@ -73,5 +70,29 @@ public class CalendarException {
 
     public ExceptionType getExceptionType() {
         return exceptionType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CalendarException that = (CalendarException) o;
+        return Objects.equals(serviceId, that.serviceId) &&
+                Objects.equals(date, that.date) &&
+                exceptionType == that.exceptionType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serviceId, date, exceptionType);
+    }
+
+    @Override
+    public String toString() {
+        return "CalendarException{" +
+                "serviceId='" + serviceId + '\'' +
+                ", date='" + date + '\'' +
+                ", exceptionType=" + exceptionType +
+                '}';
     }
 }

@@ -2,10 +2,8 @@ package net.eightytwenty.rtd.gtfs;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
-/**
- * Created by gordon on 9/29/16.
- */
 public class Trip {
     public static final String HEADER = "block_id,route_id,direction_id,trip_headsign,shape_id,service_id,trip_id";
 
@@ -67,5 +65,37 @@ public class Trip {
 
     public String getTripId() {
         return tripId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Trip trip = (Trip) o;
+        return isInbound == trip.isInbound &&
+                Objects.equals(blockId, trip.blockId) &&
+                Objects.equals(routeId, trip.routeId) &&
+                Objects.equals(tripHeadsign, trip.tripHeadsign) &&
+                Objects.equals(shapeId, trip.shapeId) &&
+                Objects.equals(serviceId, trip.serviceId) &&
+                Objects.equals(tripId, trip.tripId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(blockId, routeId, isInbound, tripHeadsign, shapeId, serviceId, tripId);
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "blockId='" + blockId + '\'' +
+                ", routeId='" + routeId + '\'' +
+                ", isInbound=" + isInbound +
+                ", tripHeadsign='" + tripHeadsign + '\'' +
+                ", shapeId='" + shapeId + '\'' +
+                ", serviceId='" + serviceId + '\'' +
+                ", tripId='" + tripId + '\'' +
+                '}';
     }
 }

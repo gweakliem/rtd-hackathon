@@ -4,16 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static net.eightytwenty.rtd.gtfs.GtfsHelper.tryGet;
 
-/**
- * Created by gordon on 9/29/16.
- */
 public class StopTime {
     private final static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
     public static final String HEADER =
@@ -143,4 +137,41 @@ public class StopTime {
         return isTimeExact;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StopTime stopTime = (StopTime) o;
+        return stopSequence == stopTime.stopSequence &&
+                Double.compare(stopTime.shapeDistTraveled, shapeDistTraveled) == 0 &&
+                isTimeExact == stopTime.isTimeExact &&
+                Objects.equals(tripId, stopTime.tripId) &&
+                Objects.equals(arrivalTime, stopTime.arrivalTime) &&
+                Objects.equals(departureTime, stopTime.departureTime) &&
+                Objects.equals(stopId, stopTime.stopId) &&
+                Objects.equals(stopHeadsign, stopTime.stopHeadsign) &&
+                pickupType == stopTime.pickupType &&
+                dropOffType == stopTime.dropOffType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tripId, arrivalTime, departureTime, stopId, stopSequence, stopHeadsign, pickupType, dropOffType, shapeDistTraveled, isTimeExact);
+    }
+
+    @Override
+    public String toString() {
+        return "StopTime{" +
+                "tripId='" + tripId + '\'' +
+                ", arrivalTime=" + arrivalTime +
+                ", departureTime=" + departureTime +
+                ", stopId='" + stopId + '\'' +
+                ", stopSequence=" + stopSequence +
+                ", stopHeadsign='" + stopHeadsign + '\'' +
+                ", pickupType=" + pickupType +
+                ", dropOffType=" + dropOffType +
+                ", shapeDistTraveled=" + shapeDistTraveled +
+                ", isTimeExact=" + isTimeExact +
+                '}';
+    }
 }
