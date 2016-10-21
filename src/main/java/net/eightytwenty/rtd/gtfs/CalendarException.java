@@ -2,6 +2,8 @@ package net.eightytwenty.rtd.gtfs;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -11,10 +13,12 @@ import java.util.*;
 public class CalendarException {
     public static final String HEADER = "service_id,date,exception_type";
     private String serviceId;
-    private String date;
+    private LocalDate date;
     private ExceptionType exceptionType;
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-    enum ExceptionType {
+
+    public enum ExceptionType {
         SERVICE_ADDED(1),
         SERVICE_REMOVED(2);
 
@@ -41,7 +45,7 @@ public class CalendarException {
     }
 
     public CalendarException(String serviceId,
-                             String date,
+                             LocalDate date,
                              ExceptionType exceptionType) {
         this.serviceId = serviceId;
         this.date = date;
@@ -55,7 +59,7 @@ public class CalendarException {
                 header -> header.startsWith(HEADER),
                 fields -> new CalendarException(
                         fields[0],
-                        fields[1],
+                        LocalDate.parse(fields[1], DATE_FORMAT),
                         ExceptionType.parseRouteType(fields[2])
                 ));
     }
@@ -64,7 +68,7 @@ public class CalendarException {
         return serviceId;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

@@ -47,13 +47,13 @@ public class RtdApplicationConfiguration {
 
         calendars = Calendar.parse(getRtdResource("gtfs/calendar.txt"));
         calendarLookup = Arrays.stream(calendars)
-               .collect(Collectors.toMap(Calendar::getServiceId, Function.identity()));
+                .collect(Collectors.toMap(Calendar::getServiceId, Function.identity()));
 
         routes = Route.parse(getRtdResource("gtfs/routes.txt"));
         // route - join to Agency on the agency_id column
         routeLookup = Arrays.stream(routes)
-               .map(route -> new RouteModel(route, rtd))
-               .collect(toMap(r -> r.getRoute().getRouteId(), Function.identity()));
+                .map(route -> new RouteModel(route, rtd))
+                .collect(toMap(r -> r.getRoute().getRouteId(), Function.identity()));
 
         stops = Stop.parse(getRtdResource("gtfs/stops.txt"), rtd.getTimezone());
         Map<String, Stop> stopLookup = Arrays.stream(stops)
@@ -61,12 +61,12 @@ public class RtdApplicationConfiguration {
 
         trips = Trip.parse(getRtdResource("gtfs/trips.txt"));
         tripModelMap = Arrays.stream(trips)
-               .map(trip -> new TripModel(trip,
-                       routeLookup.get(trip.getRouteId()).getRoute(),
-                       calendarLookup.get(trip.getServiceId())
-               ))
-               .collect(toMap(tm -> tm.getTrip(),
-                       Function.identity()));
+                .map(trip -> new TripModel(trip,
+                        routeLookup.get(trip.getRouteId()).getRoute(),
+                        calendarLookup.get(trip.getServiceId())
+                ))
+                .collect(toMap(tm -> tm.getTrip(),
+                        Function.identity()));
 
         stopTimes = StopTime.parse(getRtdResource("gtfs/stop_times.txt"));
         // join to stop on  stop_id column
@@ -98,6 +98,7 @@ public class RtdApplicationConfiguration {
         provider.setCredentials(new AuthScope("rtd-denver.com", 80),
                 new Credentials() {
                     @Override
+                    // TODO - this is a deprecated interface, find alternate method
                     public Principal getUserPrincipal() {
                         return new PrincipalImpl("RTDgtfsRT");
                     }

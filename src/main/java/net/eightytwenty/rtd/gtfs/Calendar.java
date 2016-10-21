@@ -6,9 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-/**
- * Created by gordon on 9/29/16.
- */
 public class Calendar {
     public static final String HEADER = "service_id,start_date,end_date,monday,tuesday,wednesday,thursday,friday,saturday,sunday";
 
@@ -24,7 +21,7 @@ public class Calendar {
     private boolean runsSunday;
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-    private Calendar(String serviceId, LocalDate startDate, LocalDate endDate, boolean runsMonday, boolean runsTuesday, boolean runsWednesday, boolean runsThursday, boolean runsFriday, boolean runsSaturday, boolean runsSunday) {
+    public Calendar(String serviceId, LocalDate startDate, LocalDate endDate, boolean runsMonday, boolean runsTuesday, boolean runsWednesday, boolean runsThursday, boolean runsFriday, boolean runsSaturday, boolean runsSunday) {
         this.serviceId = serviceId;
         this.startDate = startDate;
         this.endDate = endDate;

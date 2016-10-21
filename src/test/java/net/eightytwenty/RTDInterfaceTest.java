@@ -15,9 +15,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- *
- */
 public class RTDInterfaceTest {
     RestTemplate restTemplate;
 
@@ -27,18 +24,6 @@ public class RTDInterfaceTest {
                 //new RestTemplate(asList(new ByteArrayHttpMessageConverter()));
         // Message converter doesn't work. RTD claims text/plain but it's actually application/protobuf
                 //new RestTemplate(asList(new ProtobufHttpMessageConverter()));
-        String username = "RTDgtfsRT";
-        String password = "realT!m3Feed";
-
-/*
-        List<ClientHttpRequestInterceptor> interceptors = Collections
-                .singletonList(new BasicAuthorizationInterceptor(
-                        username, password));
-        restTemplate.setRequestFactory(new InterceptingClientHttpRequestFactory(restTemplate.getRequestFactory(),
-                interceptors));
-*/
-        //GtfsRealtime.FeedMessage feedMessage =  mock(GtfsRealtime.FeedMessage.class);
-        //when(feedMessage.getEntityCount()).thenReturn(23);
         ResponseEntity<GtfsRealtime.FeedMessage> rtdRealtimeFeed = new ResponseEntity<>(
                 GtfsRealtime.FeedMessage.getDefaultInstance(), HttpStatus.OK
         );

@@ -1,28 +1,26 @@
 package net.eightytwenty.rtd.service;
 
-import net.eightytwenty.rtd.config.RtdApplicationConfiguration;
-import net.eightytwenty.rtd.gtfs.*;
-import net.eightytwenty.rtd.gtfs.Calendar;
+import net.eightytwenty.rtd.gtfs.Route;
+import net.eightytwenty.rtd.gtfs.Stop;
+import net.eightytwenty.rtd.gtfs.StopTime;
+import net.eightytwenty.rtd.gtfs.Trip;
 import net.eightytwenty.rtd.model.RouteModel;
 import net.eightytwenty.rtd.model.StopTimeModel;
 import net.eightytwenty.rtd.model.TripModel;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.util.MultiValueMap;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 import static net.eightytwenty.rtd.gtfs.StopBuilder.stopBuilder;
 import static net.eightytwenty.rtd.util.ResourceUtil.getRtdResource;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
@@ -199,7 +197,7 @@ public class RoutingServiceTest {
     }
 
     @Test
-    public void findRoutingForTrip() throws IOException {
+    public void findRoutingForTrip_ReturnsExpectedRoutes() throws IOException {
         Map<String, RouteModel> routeLookup;
         Map<String, Stop> stopLookup;
         Map<String, TripModel> tripLookup;
@@ -252,5 +250,14 @@ public class RoutingServiceTest {
 
         assertThat(routingForTrip.stream().map(Route::getRouteId).collect(toList()).toArray(),
                 arrayContainingInAnyOrder("20", "28", "28B"));
+    }
+
+    @Test
+    public void findRouting_ReturnsExpectedRoute() {
+        //RoutingService service = new RoutingService(stops, tripModelMap, stopListMap);
+
+        //List<Route> routes = service.findRoutes(39.750931, -104.9236592, 39.752825, -105);
+
+
     }
 }

@@ -5,6 +5,7 @@ import com.google.transit.realtime.GtfsRealtime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 import static org.codehaus.groovy.runtime.InvokerHelper.asList;
 import static org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter.PROTOBUF;
 
+@Component
 public class RTDInterface {
     private RestTemplate restTemplate;
     private String rtdHost;
