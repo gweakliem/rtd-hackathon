@@ -9,7 +9,11 @@ import java.util.Map;
 import static net.eightytwenty.rtd.gtfs.CalendarException.ExceptionType.SERVICE_ADDED;
 
 /**
- * Aggregates the Calendar and CalendarException gtfs types into a unified view
+ * Services define a range of dates between which a Trip is available, the days of the week when it is available
+ * (such as Monday through Friday), and are defined in the calendar.txt file. A single Service can be applied to
+ * multiple different Trips. If a given vehicle has different schedules, such as one schedule on weekdays and a
+ * different one on weekends, you should define two Trips with the same stops but different Services and different
+ * StopTimes.
  */
 public class CalendarModel {
     private Map<String, Calendar> calendarByServiceId;

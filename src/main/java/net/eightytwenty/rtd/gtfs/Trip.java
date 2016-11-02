@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * A Trip represents a journey taken by a vehicle through Stops. Trips are time-specific — they are defined as a
+ * sequence of StopTimes, so a single Trip represents one journey along a transit line or route. In addition to
+ * StopTimes, Trips use Calendars to define the days when a Trip is available to passengers.
+ */
 public class Trip {
     public static final String HEADER = "block_id,route_id,direction_id,trip_headsign,shape_id,service_id,trip_id";
 

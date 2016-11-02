@@ -42,3 +42,4 @@ repositories {
 	mavenCentral()
 }
 
+defaultTasks 'test'

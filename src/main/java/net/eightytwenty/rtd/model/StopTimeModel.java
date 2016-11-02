@@ -5,8 +5,8 @@ import net.eightytwenty.rtd.gtfs.StopTime;
 import net.eightytwenty.rtd.gtfs.Trip;
 
 /**
- * Establishes relationship between StopTime and related
- * GTFS objects
+ * A StopTime defines when a vehicle arrives at a location, how long it stays there, and when it departs.
+ * StopTimes define the path and schedule of Trips.
  */
 public class StopTimeModel {
     private StopTime stopTime;

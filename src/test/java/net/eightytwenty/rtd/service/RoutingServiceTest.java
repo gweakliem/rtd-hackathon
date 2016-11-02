@@ -1,9 +1,7 @@
 package net.eightytwenty.rtd.service;
 
-import net.eightytwenty.rtd.gtfs.Route;
-import net.eightytwenty.rtd.gtfs.Stop;
-import net.eightytwenty.rtd.gtfs.StopTime;
-import net.eightytwenty.rtd.gtfs.Trip;
+import net.eightytwenty.rtd.gtfs.*;
+import net.eightytwenty.rtd.gtfs.Calendar;
 import net.eightytwenty.rtd.model.RouteModel;
 import net.eightytwenty.rtd.model.StopTimeModel;
 import net.eightytwenty.rtd.model.TripModel;
@@ -11,15 +9,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.*;
 import static net.eightytwenty.rtd.gtfs.StopBuilder.stopBuilder;
+import static net.eightytwenty.rtd.gtfs.StopTimeBuilder.stopTimeBuilder;
+import static net.eightytwenty.rtd.gtfs.TripBuilder.tripBuilder;
+import static net.eightytwenty.rtd.service.RoutingService.ScheduleDates.WEEKDAY;
+import static net.eightytwenty.rtd.service.RoutingService.ServiceDirection.NORTHBOUND;
 import static net.eightytwenty.rtd.util.ResourceUtil.getRtdResource;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
@@ -27,6 +32,7 @@ import static org.junit.Assert.*;
 public class RoutingServiceTest {
 
     private Stop[] stops;
+    public static final Calendar ALL_DATES = new Calendar("svc1", LocalDate.MIN, LocalDate.MAX, true, true, true, true, true, true, true);
 
     @Before
     public void setup() throws IOException {
@@ -64,7 +70,6 @@ public class RoutingServiceTest {
 
     @Test
     public void findNearestStop_OneStreet() throws Exception {
-        RoutingService service = new RoutingService(stops, null, null);
 
         stops = new Stop[]{
                 stopBuilder().stopLat(39.750989).stopLon(-104.932565).stopName("23rd Ave & Dexter St").build(),
@@ -102,6 +107,7 @@ public class RoutingServiceTest {
                 stopBuilder().stopLat(39.751083).stopLon(-104.90114).stopName("23rd Ave & Roslyn St").build(),
                 stopBuilder().stopLat(40.199602).stopLon(-105.103132).stopName("23rd Ave & Main St").build()
         };
+        RoutingService service = new RoutingService(stops, null, null);
 
         Optional<Stop> nearestStop = service.findNearestStop(39.750931, -104.9236592);
         assertTrue(nearestStop.isPresent());
@@ -253,10 +259,66 @@ public class RoutingServiceTest {
     }
 
     @Test
-    public void findRouting_ReturnsExpectedRoute() {
-        //RoutingService service = new RoutingService(stops, tripModelMap, stopListMap);
+    public void getStopTimesForRoute_ReturnsStopTimesInOrder() {
 
-        //List<Route> routes = service.findRoutes(39.750931, -104.9236592, 39.752825, -105);
+    }
+
+    @Test
+    public void findServicesFromStop_ReturnsExpectedRoutes() {
+        Map<Trip, TripModel> tripModelMap = new HashMap<>();
+        Trip trip = tripBuilder().tripId("200").routeId("38").build();
+        Route route = new Route("any", Route.RouteType.BUS,"","rtd","38","","","","");
+        tripModelMap.put(trip,new TripModel(trip, route, ALL_DATES));
+        Route route2 = new Route("any", Route.RouteType.BUS,"","rtd","20","","","","");
+        Trip trip2 = tripBuilder().tripId("201").routeId("20").build();
+        tripModelMap.put(trip2, new TripModel(trip2, route2, ALL_DATES));
+
+        Map<Stop, List<StopTimeModel>> stopListMap = new HashMap<>();
+        Stop[] stops = {stopBuilder().stopId("1000").build()};
+        StopTime stopTime = stopTimeBuilder().stopId("1000").tripId("200").build();
+        StopTime stopTime2 = stopTimeBuilder().stopId("1000").tripId("201").build();
+        stopListMap.put(stops[0], asList(
+                new StopTimeModel(stopTime,stops[0], trip),
+                new StopTimeModel(stopTime2,stops[0], trip2)));
+
+        RoutingService service = new RoutingService(stops, tripModelMap, stopListMap);
+
+        List<Route> nextRides = service.findServicesFromStop("1000");
+
+        assertThat(nextRides.size(), equalTo(2));
+        assertThat(nextRides.stream().map(r -> r.getRouteId()).collect(toList()),
+                containsInAnyOrder("38", "20"));
+    }
+
+    @Test
+    public void findTrip() {
+        Map<Trip, TripModel> tripModelMap = null;
+        Map<Stop, List<StopTimeModel>> stopListMap = null;
+        RoutingService service = new RoutingService(stops, tripModelMap, stopListMap);
+
+//        List<Route> routes = service.findTripDeparture(39.750931, -104.9236592,39.752825, -105,
+//                LocalDateTime.of(2016,10,22,16,17));
+    }
+
+    @Test
+    public void findNextRide() {
+        Map<Trip, TripModel> tripModelMap = null;
+        Map<Stop, List<StopTimeModel>> stopListMap = null;
+        RoutingService service = new RoutingService(stops, tripModelMap, stopListMap);
+
+    }
+
+    @Test
+    public void findSchedule() {
+        Map<Trip, TripModel> tripModelMap = null;
+        Map<Stop, List<StopTimeModel>> stopListMap = null;
+        RoutingService service = new RoutingService(stops, tripModelMap, stopListMap);
+
+        //PARK AVE WEST & BLAKE ST
+        // NORTHBOUND, SOUTHBOUND, EASTBOUND, WESTBOUND
+        // WEEKDAY, SATURDAY, SUNDAY/HOLIDAY
+
+        List<List<TripModel>> schedule = service.findSchedule("8", NORTHBOUND, WEEKDAY);
 
 
     }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -62,6 +63,7 @@ public class RoutingService {
      * http://stackoverflow.com/questions/483488/strategy-to-find-your-best-route-via-public-transportation-only
      * http://pgrouting.org/ - for postgres, in case I want to go that route... haha
      * https://flowingdata.com/2010/03/09/looking-inside-a-bus-routing-algorithm/
+     *
      * @param startLat
      * @param startLong
      * @param destLat
@@ -131,4 +133,22 @@ public class RoutingService {
         return Math.abs(distance);
     }
 
+    public List<Route> findServicesFromStop(String stopId) {
+        Optional<Stop> stop = Arrays.stream(stops).filter(s -> stopId.equals(s.getStopId())).findFirst();
+
+        List<StopTimeModel> stopTimeModels = stopTimesByStop.get(stop.get());
+
+        return stopTimeModels.stream()
+                .map(stm -> stm.getTrip())
+                .map(t -> tripModelMap.get(t).getRoute())
+                .collect(Collectors.toList());
+    }
+
+    public List<List<TripModel>> findSchedule(String routeId, ServiceDirection northbound, ScheduleDates weekday) {
+        return null;
+    }
+
+    public enum ServiceDirection {NORTHBOUND, SOUTHBOUND, EASTBOUND, WESTBOUND}
+
+    public enum ScheduleDates {WEEKDAY, SATURDAY, SUNDAY, HOLIDAY}
 }
